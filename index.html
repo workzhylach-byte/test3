@@ -174,7 +174,7 @@ section{padding:90px 0;position:relative}
 .rv .m i{width:16px;height:16px;border-radius:4px;color:#fff;font:700 8px/16px Arial;text-align:center;font-style:normal}
 .rv p{font-size:14px;line-height:1.55;flex:1;margin:0}
 .rv .d{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #eee;padding-top:12px;margin-top:14px}
-.rv .d small{display:block;font-size:10px;letter-spacing:1px;color:#777;text-transform:uppercase}
+.rv .d small{display:block;font-size:11px;letter-spacing:.8px;color:#777;text-transform:uppercase}
 .rv .d b{font-size:13px}.rv .d span{background:#e4edf7;color:var(--blue);font-size:11px;padding:4px 10px;border-radius:12px}
 .vid{position:relative;aspect-ratio:16/10;border:0;padding:0;cursor:pointer;display:block;width:100%;background:#1c2a3a center/cover no-repeat}
 .vid .vbadge{position:absolute;left:12px;top:12px;background:#fff;color:#1b1b1b;font-size:11px;font-weight:700;padding:5px 10px;border-radius:12px}
@@ -240,6 +240,20 @@ dialog.lb[open]{animation:mPop .25s cubic-bezier(.2,.8,.2,1)}
 .final p{color:#dce8f6;font-weight:300}
 .final .contacts{display:flex;flex-direction:column;gap:12px;align-items:stretch}
 .final .ring{position:absolute;right:-90px;top:-90px;width:300px;height:300px;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);box-shadow:0 0 0 30px rgba(255,255,255,.03),0 0 0 60px rgba(255,255,255,.02)}
+
+/* адаптив: доработки */
+@media (max-width:1120px) and (min-width:1001px){ .hbtns .btn.line{display:none} .menu a{padding:9px 12px} }
+@media (min-width:641px) and (max-width:1000px){ .tariffs{max-width:640px;margin:0 auto} .price-note{max-width:640px;margin-left:auto;margin-right:auto} .stage{max-width:640px;margin:0 auto;width:100%} }
+footer a{display:inline-block;padding:12px 0}
+@media (max-width:420px){
+  .kicker{font-size:11px;letter-spacing:.04em;padding:8px 12px}
+  .rv .m{flex-wrap:wrap;gap:6px}
+  .rv .who b{font-size:16px}
+  .final .contacts .btn{letter-spacing:.02em;padding-left:14px;padding-right:14px}
+  .btn{letter-spacing:.02em}
+  .calc .rings{width:64px;height:64px}
+  h1{font-size:30px}
+}
 
 /* модальные окна */
 dialog.modal{width:min(560px,calc(100% - 28px));max-height:calc(100% - 28px);padding:0;border:0;border-radius:32px;color:#fff;overflow:auto;
@@ -648,7 +662,8 @@ footer .w{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;bor
   var step = function () { var c = vis()[0]; return c ? c.getBoundingClientRect().width + 16 : 336; };
   var upd = function () {
     var list = vis(), max = track.scrollWidth - track.clientWidth, w = step();
-    var first = Math.min(list.length - 1, Math.round(track.scrollLeft / w)), per = Math.max(1, Math.floor((track.clientWidth - 40) / w));
+    var tr = track.getBoundingClientRect(), per = Math.max(1, list.filter(function (c) { var r = c.getBoundingClientRect(); return r.left >= tr.left - 2 && r.right <= tr.right + 2; }).length);
+    var first = Math.min(list.length - 1, Math.round(track.scrollLeft / w));
     var last = Math.min(list.length, first + per); if (track.scrollLeft >= max - 4) { last = list.length; first = Math.max(0, last - per); }
     cnt.textContent = list.length ? (first + 1) + (last > first + 1 ? '–' + last : '') + ' из ' + list.length : '';
     var k = max > 0 ? track.scrollLeft / max : 0, bw = Math.min(100, per / Math.max(1, list.length) * 100);
